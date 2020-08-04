@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "580842325689",
+    "firebase_url": "https://farata-3dc6e.firebaseio.com",
+    "project_id": "farata-3dc6e",
+    "storage_bucket": "farata-3dc6e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580842325689:android:3ef00ab0ec3739c2d23d68",
+        "android_client_info": {
+          "package_name": "com.example.farata"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580842325689-gtcc977l10qauoni1p6m2mqifi5ca69d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsawAtU6gNHBYd-dVnSifUSkUt5ooqnl4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580842325689-gtcc977l10qauoni1p6m2mqifi5ca69d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
