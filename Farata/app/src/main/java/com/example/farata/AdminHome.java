@@ -8,14 +8,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.farata.data.BookDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -34,6 +34,7 @@ import com.google.firebase.storage.UploadTask;
 public class AdminHome extends AppCompatActivity {
 
     public AdminHome() {
+
     }
 
     @Override
@@ -42,22 +43,35 @@ public class AdminHome extends AppCompatActivity {
         inflater.inflate(R.menu.mainmenu, menu);
         return true;
     }
+    private BookDetails bookDetails;
     private Button UploadBook;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseUser firebaseUser;
     private FirebaseDatabase fb;
     private DatabaseReference databaseReference;
+    private DatabaseReference dbrf;
+    private Button ViewBooks;
+    private EditText Book;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
         UploadBook =findViewById(R.id.uploadbook);
+        ViewBooks = findViewById(R.id.viewbooks);
+        Book = findViewById(R.id.book);
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        fb = FirebaseDatabase.getInstance();
+        databaseReference = fb.getReference();
 
+
+
+        dbrf = databaseReference.child("BooksPDFs").child(firebaseUser.getUid());
 
         UploadBook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +81,14 @@ public class AdminHome extends AppCompatActivity {
                 startActivityForResult(intent,9);
             }
         });
+
+        ViewBooks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),AdminUploadedBooks.class));
+            }
+        });
+
     }
 
     @Override
@@ -96,25 +118,23 @@ public class AdminHome extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uri.isComplete());
+                        while(!uri.isComplete());
                         Uri url = uri.getResult();
-                        final BookDetails bookDetails = new BookDetails(bookname,url.toString());
-                        databaseReference = FirebaseDatabase.getInstance().getReference().child("books");
-                        databaseReference.setValue(bookDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(),"Details Uploaded",Toast.LENGTH_LONG).show();
-                                }
-                                else {
-                                    Toast.makeText(getApplicationContext(),task.getException().toString(),Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-                    }
-                })
+                         bookDetails = new BookDetails(bookname,url.toString());
+                         dbrf.addListenerForSingleValueEvent(new ValueEventListener() {
+                             @Override
+                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                 float ccount = snapshot.getChildrenCount()+1;
+                                 func(ccount);
+                             }
 
-                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                             @Override
+                             public void onCancelled(@NonNull DatabaseError error) {
+
+                             }
+                         });
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
 
@@ -124,6 +144,35 @@ public class AdminHome extends AppCompatActivity {
                     }
                 });
             }
+        }
+    }
+
+    private void func(float ccount) {
+        dbrf.child("book"+(int)ccount).setValue(bookDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(),"Details Uploaded",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),task.getException().toString(),Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logoutbutton:
+                FirebaseAuth.getInstance().signOut();
+                //firebaseUser = null;
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

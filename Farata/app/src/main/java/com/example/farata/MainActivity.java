@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
         if(firebaseUser != null) {
 
-                startActivity(new Intent(getApplicationContext(), AdminHome.class));
+                startActivity(new Intent(getApplicationContext(), Home.class));
 
         }
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                    @Override
                    public void onComplete(@NonNull Task<AuthResult> task) {
                        if(task.isSuccessful()) {
-                           if(Email.getText().toString().equals("rajasaibandaru99@gmail.com")) {
+                           if(Email.getText().toString().equals("rajasaibandaru99@gmail.com") || (Email.getText().toString().equals("sahithipola11@gmail.com"))) {
                                startActivity(new Intent(getApplicationContext(),AdminHome.class));
                            }
                            else if (firebaseAuth.getCurrentUser().isEmailVerified()) {

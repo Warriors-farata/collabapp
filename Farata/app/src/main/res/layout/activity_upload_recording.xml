@@ -4,43 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminHome">
+    tools:context=".UploadRecording">
 
-    <Button
-        android:id="@+id/uploadbook"
+    <TextView
+        android:id="@+id/bookname_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="12sp"
-        android:text="upload book"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.273" />
+        app:layout_constraintVertical_bias="0.133" />
 
     <Button
-        android:id="@+id/viewbooks"
+        android:id="@+id/download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Books"
+        android:text="Download Book PDF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.633" />
+        app:layout_constraintVertical_bias="0.349" />
 
-    <EditText
-        android:id="@+id/book"
-        android:layout_width="382dp"
-        android:layout_height="74dp"
-        android:ems="10"
-        android:hint="ENTER BOOK NAME AND UPLOAD THE BOOK"
-        android:inputType="textPersonName"
+    <Button
+        android:id="@+id/upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload Recording"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.161" />
+        app:layout_constraintVertical_bias="0.499" />
 </androidx.constraintlayout.widget.ConstraintLayout>
