@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".UploadRecording"></activity>
+        <activity android:name=".ViewAllBooks" />
+        <activity android:name=".AdminUploadedBooks" />
+        <activity android:name=".ForgotPassword" />
         <activity android:name=".AdminHome" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".Home" />
